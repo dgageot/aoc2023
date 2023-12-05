@@ -1,21 +1,13 @@
 #!/usr/bin/env ruby
 # Expected: 46
 
-require "scanf"
-require "stringio"
-require "interval_set"
+require "../common.rb"
 
-specs = STDIN.readlines(chomp: true)
+lines = STDIN.readlines(chomp: true)
 
-steps = []
-pos = 2
-while pos < specs.count do
-    lines = specs[pos..].take_while { |line| !line.empty? }
-    steps << lines[1..].map { |line| dest, source, range = line.scanf("%d %d %d"); [IntervalSet[source..source+range], dest - source] }
-    pos += lines.count+1
-end
+seeds = IntervalSet[*lines.first.scanInts.each_slice(2).map { |from, n| from...from+n }]
+steps = lines[2..].slice_on("").map { |group| group[1..].map { |line| dst, src, n = line.scanInts; [src..src+n, dst - src] }}
 
-seeds = IntervalSet[*specs.first.scan(/\d+/).map(&:to_i).each_slice(2).map { |from, n| (from...from+n) }]
 steps.each { |step|
     added = IntervalSet.new
     step.each { |range, shift|

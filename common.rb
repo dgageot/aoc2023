@@ -1,5 +1,7 @@
 require "active_support/all"
 require "scanf"
+require "stringio"
+require "interval_set"
 
 class Array
     def chop
@@ -18,10 +20,6 @@ class Array
         self.each_slice(self.size / 2)
     end
 
-    def as_range()
-        Range.new(self[0], self[1])
-    end
-
     def second()
         self[1]
     end
@@ -33,11 +31,26 @@ class Array
     def fourth()
         self[4]
     end
+
+    def slice_on(delim)
+        slices = []
+        pos = 0
+        while pos < self.count do
+            lines = self[pos..].take_while { |line| line != delim }
+            slices << lines
+            pos += lines.count+1
+        end
+        slices
+    end
 end
 
 class String
     def each_slice(n)
         self.chars.each_slice(n).map(&:join)
+    end
+
+    def scanInts
+        self.scan(/\d+/).map(&:to_i)
     end
 
     def second()

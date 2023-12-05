@@ -1,23 +1,16 @@
 #!/usr/bin/env ruby
 # Expected: 35
 
-require "scanf"
+require "../common.rb"
 
-specs = STDIN.readlines(chomp: true)
+lines = STDIN.readlines(chomp: true)
 
-steps = []
-pos = 2
-while pos < specs.count do
-    lines = specs[pos..].take_while { |line| !line.empty? }
-    steps << lines[1..].map { |line| dest, source, range = line.scanf("%d %d %d"); [(source..source+range), dest - source] }
-    pos += lines.count+1
-end
-
-seeds = specs.first.scan(/\d+/).map(&:to_i)
+seeds = lines.first.scanInts()
+steps = lines[2..].slice_on("").map { |group| group[1..].map { |line| dst, src, n = line.scanInts; [src..src+n, dst - src] }}
 p seeds.map { |seed|
-    steps.each { |step|
+    steps.inject(seed) { |seed, step|
         match = step.find { |range, _| range.include?(seed) }
         seed += match[1] unless match.nil?
+        seed
     }
-    seed
 }.min
