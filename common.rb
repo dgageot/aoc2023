@@ -50,7 +50,7 @@ class String
     end
 
     def scanInts
-        self.scan(/\d+/).map(&:to_i)
+        self.scan(/\-?\d+/).map(&:to_i)
     end
 
     def second()
