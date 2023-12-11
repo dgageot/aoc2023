@@ -4,5 +4,4 @@
 p STDIN
     .readlines(chomp: true)
     .map { |line| line.delete("^1-9") }
-    .map { |line| (line[0] + line[-1]).to_i }
-    .sum
+    .sum { |line| (line[0] + line[-1]).to_i }

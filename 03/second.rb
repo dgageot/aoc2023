@@ -3,10 +3,6 @@
 
 grid = STDIN.readlines(chomp: true).map { |line| line.chars }
 
-def gear?(grid, y, x)
-    (grid[y] || [])[x] == "*"
-end
-
 def search_gears(grid)
     grid.each.with_index do |row, y|
         x = 0
@@ -15,7 +11,7 @@ def search_gears(grid)
             if /\d+/.match(group)
                 (y-1..y+1).each do |yy|
                     (x-1..x+group.length).each do |xx|
-                        yield [[yy, xx], group.to_i] if gear?(grid, yy, xx)
+                        yield [[yy, xx], group.to_i] if grid.dig(yy, xx) == "*"
                     end
                 end
             end

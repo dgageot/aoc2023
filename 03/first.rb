@@ -4,7 +4,8 @@
 grid = STDIN.readlines(chomp: true).map { |line| line.chars }
 
 def symbol?(grid, y, x)
-    !(grid[y].nil? || grid[y][x].nil? || /[\.\d]/.match(grid[y][x]))
+    v = grid.dig(y, x)
+    !(v.nil? || /[\.\d]/.match(v))
 end
 
 def near_symbol?(grid, group, y, x)
