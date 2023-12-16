@@ -3,6 +3,33 @@ require "scanf"
 require "stringio"
 require "interval_set"
 
+class Grid
+    def initialize(rows)
+        @rows = rows
+        @height = rows.length
+        @width = @height == 0 ? 0 : rows[0].length
+    end
+
+    def height
+        @height
+    end
+
+    def width
+        @width
+    end
+
+    alias length height
+
+    def [](y, x)
+        return nil if y < 0 || x < 0 || y >= @height || x >= @width
+        @rows[y][x]
+    end
+
+    def to_s
+        "\n" + @rows.map(&:join).join("\n")
+    end
+end
+
 class Array
     def chop
         self[..-2]
