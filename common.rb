@@ -25,6 +25,14 @@ class Grid
         @rows[y][x]
     end
 
+    def each(&block)
+        @rows.each_index do |y|
+            @rows[y].each_index do |x|
+                yield y, x, @rows[y][x]
+            end
+        end
+    end
+
     def to_s
         "\n" + @rows.map(&:join).join("\n")
     end
@@ -98,4 +106,3 @@ class Range
         self.to_a.intersect?(other.to_a)
     end
 end
-
