@@ -25,6 +25,11 @@ class Grid
         @rows[y][x]
     end
 
+    def []=(y, x, v)
+        return nil if y < 0 || x < 0 || y >= @height || x >= @width
+        @rows[y][x] = v
+    end
+
     def each(&block)
         @rows.each_index do |y|
             @rows[y].each_index do |x|

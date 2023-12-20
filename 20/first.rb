@@ -5,13 +5,7 @@ Mod = Struct.new(:name, :type, :outputs, :state)
 
 def parseModule(line)
     from, to = line.split(" -> ")
-    if from == "broadcaster"
-        type = ""
-        name = from
-    else
-        type = from[0]
-        name = from[1..]
-    end
+    _, type, name = /([&%])?(.*)/.match(from).to_a
     Mod.new(name, type, to.split(", "))
 end
 
